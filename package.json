@@ -1,0 +1,35 @@
+{
+  "name": "web-bridge-base",
+  "description": "Base class for RPC calls between web containers and iframes",
+  "keywords": [
+    "web",
+    "iframe",
+    "RPC"
+  ],
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./containerApp": {
+      "types": "./dist/containerApp.d.ts",
+      "import": "./dist/containerApp.js",
+      "require": "./dist/containerApp.cjs"
+    },
+    "./microApp": {
+      "types": "./dist/microApp.d.ts",
+      "import": "./dist/microApp.js",
+      "require": "./dist/microApp.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.2",
+    "vite": "^7.1.5",
+    "vite-plugin-dts": "^4.5.0"
+  }
+}

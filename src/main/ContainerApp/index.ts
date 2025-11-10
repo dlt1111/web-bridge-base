@@ -95,7 +95,7 @@ class ContainerBase {
   /**
    * 监听由window.open打开的页面卸载事件
    */
-  public onUnloadMicroApp(callback: (data?: any) => void, namespace?: string) {
+  public onUnloadOpener(callback: (data?: any) => void, namespace?: string) {
     this.logger.log("「监听」子窗口卸载");
     return this.on(EAction.unloadOpener, callback, namespace);
   }

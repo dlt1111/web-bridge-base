@@ -2,6 +2,8 @@
 
 作为 web 容器和 iframe 子应用互相调用的基类，可继承此类进行自定义扩展互相调用的方法。
 
+模板仓库：https://github.com/dlt1111/web-bridge-template
+
 ## 说明
 
 消息格式
@@ -30,7 +32,7 @@ interface IPostMessageContent<T = any> {
 2. 被动监听
 
    ```ts
-   // 若要及时返回数据，父应用这里的callback需有返回值，子应用使用 this.get 调用
+   // 若要即时返回数据，父应用这里的callback需有返回值，子应用使用 this.get 调用
    const clear = this.on("xxx", callback);
    clear(); // 移除监听
    ```
@@ -48,7 +50,7 @@ interface IPostMessageContent<T = any> {
 ### ContainerApp（容器使用）
 
 ```ts
-import ContainerBase, { IPostMessageContent, PostMessageData } from "web-bridge/containerApp";
+import ContainerBase, { IPostMessageContent, PostMessageData } from "web-bridge-base/containerApp";
 
 class Container extends ContainerBase {
   constructor() {
@@ -84,7 +86,7 @@ export default new Container();
 ### MicroApp（iframe 子应用使用）
 
 ```ts
-import MicroBase from "web-bridge/microApp";
+import MicroBase from "web-bridge-base/microApp";
 
 class Micro extends MicroBase {
   constructor() {
@@ -110,3 +112,11 @@ class Micro extends MicroBase {
 
 export default new Micro();
 ```
+
+## 业务项目使用
+
+将自定义扩展的新包发布后，供业务项目使用。
+
+主子应用分别引入对应的文件（containerApp / microApp）
+
+并尽可能早的执行各自的 **init** 方法，为了安全 init 中可传入 **targetOrigin** 保证调用精准, 也可不传，默认为 **\***

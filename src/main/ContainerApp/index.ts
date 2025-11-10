@@ -105,7 +105,7 @@ class ContainerBase {
    */
   protected emit<T = any>(message: IPostMessageContent<T>) {
     this.logger.log(`「发送」${message?.action}`);
-    postMessageToIframe(this.iframeElement!.contentWindow!, message, this.targetOrigin);
+    postMessageToIframe(this.iframeElement?.contentWindow!, message, this.targetOrigin);
   }
 
   /**

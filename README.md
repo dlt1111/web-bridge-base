@@ -136,6 +136,7 @@ import { containerApp } from "xxx/containerApp";
 // 尽可能早的初始化（基类自带）
 containerApp.init({
   targetOrigin: "https://micro-xxx.com" // postMessage 的 targetOrigin，可不传，默认为*
+  useLogger: true // 开启/关闭日志
 });
 
 // 设置 iframe DOM 元素，与子应用交互前要先执行此方法（基类自带）
@@ -173,6 +174,7 @@ import { microApp } from "xxx/microApp";
 // 尽可能早的初始化（基类自带）
 microApp.init({
   targetOrigin: "https://container-xxx.com" // postMessage 的 targetOrigin，可不传，默认为*
+  useLogger: true // 开启/关闭日志
 });
 
 // --------- 以下为自定义扩展的示例方法 ---------

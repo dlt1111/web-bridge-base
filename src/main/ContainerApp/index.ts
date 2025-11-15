@@ -9,10 +9,11 @@ import {
 } from "../../constants/const";
 import { onMessageFromIframe, postMessageToIframe } from "../../postMessage";
 import RouterSDK from "../../router";
-import Logger from "../../utils/log";
+import Logger from "../../utils/logger";
 
 export interface IInitParams {
   targetOrigin?: string;
+  useLogger?: boolean;
 }
 
 class ContainerBase {
@@ -20,7 +21,7 @@ class ContainerBase {
   private targetOrigin: string = "*";
   private _isInitialized: boolean = false;
   private iframeElement: HTMLIFrameElement | null = null;
-  protected logger = new Logger("ContainerApp");
+  protected logger = new Logger({ prefix: "ContainerApp" });
 
   public routerSDK: RouterSDK;
 
@@ -33,14 +34,18 @@ class ContainerBase {
   /**
    * 容器初始化
    */
-  public init(params?: IInitParams) {
+  public init(params: IInitParams = {}) {
     if (this._isInitialized) return;
 
     this.logger.log("*初始化配置*");
 
     this._isInitialized = true;
 
-    if (params?.targetOrigin) this.targetOrigin = params.targetOrigin;
+    const { targetOrigin, useLogger } = params;
+
+    if (useLogger != null) this.logger.setOptions({ isOpen: useLogger });
+
+    if (targetOrigin != null) this.targetOrigin = targetOrigin;
 
     onMessageFromIframe((data, msgNamespace, event) => {
       const fns = this.functions[msgNamespace]?.[data?.action];

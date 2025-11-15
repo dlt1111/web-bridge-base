@@ -1,17 +1,18 @@
 import { DEFAULT_NAMESPACE, EAction, IPostMessageContent, TCallback, TFunctionMap } from "../../constants/const";
 import { onMessageFromParent, postMessageToParent } from "../../postMessage";
 import { genUID } from "../../utils";
-import Logger from "../../utils/log";
+import Logger from "../../utils/logger";
 
 export interface IInitParams {
   targetOrigin?: string;
+  useLogger?: boolean;
 }
 
 class MicroBase {
   private functions: TFunctionMap;
   private targetOrigin: string = "*";
   private _isInitialized: boolean = false;
-  protected logger = new Logger("MicroApp");
+  protected logger = new Logger({ prefix: "MicroApp" });
 
   constructor() {
     this.logger.log("**实例化**");
@@ -21,14 +22,18 @@ class MicroBase {
   /**
    * 子应用初始化
    */
-  public init(params?: IInitParams) {
+  public init(params: IInitParams = {}) {
     if (this._isInitialized) return;
 
     this.logger.log("*初始化配置*");
 
     this._isInitialized = true;
 
-    if (params?.targetOrigin) this.targetOrigin = params.targetOrigin;
+    const { targetOrigin, useLogger } = params;
+
+    if (useLogger != null) this.logger.setOptions({ isOpen: useLogger });
+
+    if (targetOrigin != null) this.targetOrigin = targetOrigin;
 
     onMessageFromParent((data, event) => {
       const fns = this.functions?.[data?.action];

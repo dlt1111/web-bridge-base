@@ -2,7 +2,9 @@
 
 作为 web 容器和 iframe 子应用互相调用的基类，可继承此类进行自定义扩展互相调用的方法。
 
-扩展包模板仓库：https://github.com/dlt1111/web-bridge-template
+可直接在业务项目中使用，也可作为扩展包发布成 npm 包供业务项目使用：[扩展包模板仓库](https://github.com/dlt1111/web-bridge-template)。
+
+直接使用时，容器和子应用分别引入对应的文件（containerApp / microApp），并约定好消息格式和 action 字段，互相调用。
 
 ## 说明
 
